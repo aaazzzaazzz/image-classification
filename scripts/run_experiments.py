@@ -57,6 +57,7 @@ GROUPS = {
     "scheduler": ["resnet20_basic", "resnet20_step", "resnet20_onecycle"],
     "pretrained": ["resnet18_pretrained", "mobilenet_v3_pretrained", "resnet18_scratch"],
     "final": ["resnet20_final", "se_resnet20_final", "resnet18_pretrained_final"],
+    "kd": ["resnet20_kd"],
     "all": ORDER,
 }
 
