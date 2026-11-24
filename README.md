@@ -139,7 +139,7 @@ Windows 下如果 DataLoader 多进程报错，可加 `--num-workers 0`（例如
 
 ### 5.3 实验清单（18 个）
 
-| 实验名 | 说明 | 关键设置 |
+| 实验名 | 说明 | 关键设置（原epoch数，改动后数量在后面） |
 |---|---|---|
 | `simple_cnn` | 自定义 CNN 基线 | 60 epoch，crop+flip |
 | `resnet20_basic` | ResNet-20 基线（消融对照组） | 60 epoch，CE，cosine |
@@ -159,8 +159,8 @@ Windows 下如果 DataLoader 多进程报错，可加 `--num-workers 0`（例如
 | `resnet20_final` | RandAugment + 标签平滑 + EMA | 120 epoch |
 | `se_resnet20_final` | SE + RandAugment + 标签平滑 + EMA | 120 epoch |
 | `resnet18_pretrained_final` | 预训练 ResNet-18 + Cutout + 标签平滑 + EMA | 30 epoch |
-
-> 表中 epoch 为学习率日程长度；主实验的最大训练预算统一设为 `2×日程 + patience`，因此 18 个主实验全部触发早停（实际停止轮数见报告附录 C）。
+  
+**表中 epoch 为学习率日程长度；主实验的最大训练预算统一设为 `2×日程 + patience`，因此 18 个主实验全部触发早停。**
 
 除被研究因素外，同一组消融实验的超参数完全一致（SGD 0.1、momentum 0.9、weight decay 5e-4、
 batch size 128、cosine + 1 epoch warmup、AMP）。
