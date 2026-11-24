@@ -1,0 +1,112 @@
+{
+  "runs": {
+    "resnet20_basic": {
+      "status": "complete",
+      "elapsed": 0.004068299999971714,
+      "test_acc": 92.13,
+      "best_val_acc": 92.44
+    },
+    "simple_cnn": {
+      "status": "complete",
+      "elapsed": 0.0030280999999376945,
+      "test_acc": 92.56,
+      "best_val_acc": 92.72
+    },
+    "resnet20_aug_none": {
+      "status": "complete",
+      "elapsed": 0.001957700000048135,
+      "test_acc": 87.22,
+      "best_val_acc": 87.8
+    },
+    "resnet20_aug_cutout": {
+      "status": "complete",
+      "elapsed": 0.0025753999998414656,
+      "test_acc": 91.45,
+      "best_val_acc": 92.14
+    },
+    "resnet20_aug_randaugment": {
+      "status": "complete",
+      "elapsed": 0.0012607999999545427,
+      "test_acc": 91.77,
+      "best_val_acc": 92.86
+    },
+    "resnet20_mixup": {
+      "status": "complete",
+      "elapsed": 0.001986499999929947,
+      "test_acc": 92.06,
+      "best_val_acc": 92.42
+    },
+    "resnet20_label_smoothing": {
+      "status": "complete",
+      "elapsed": 0.004368999999996959,
+      "test_acc": 92.15,
+      "best_val_acc": 92.48
+    },
+    "resnet20_focal": {
+      "status": "complete",
+      "elapsed": 0.0015106000000741915,
+      "test_acc": 91.38,
+      "best_val_acc": 91.5
+    },
+    "resnet20_se": {
+      "status": "complete",
+      "elapsed": 0.003299299999980576,
+      "test_acc": 91.72,
+      "best_val_acc": 91.76
+    },
+    "resnet20_cbam": {
+      "status": "complete",
+      "elapsed": 0.002545400000144582,
+      "test_acc": 92.11,
+      "best_val_acc": 92.28
+    },
+    "resnet20_step": {
+      "status": "complete",
+      "elapsed": 0.0034891000000243366,
+      "test_acc": 91.39,
+      "best_val_acc": 91.8
+    },
+    "resnet20_onecycle": {
+      "status": "complete",
+      "elapsed": 0.0029180000001360895,
+      "test_acc": 91.55,
+      "best_val_acc": 92.46
+    },
+    "resnet18_pretrained": {
+      "status": "complete",
+      "elapsed": 0.001991699999962293,
+      "test_acc": 95.47,
+      "best_val_acc": 96.02
+    },
+    "mobilenet_v3_pretrained": {
+      "status": "complete",
+      "elapsed": 0.0017632999999932508,
+      "test_acc": 88.03,
+      "best_val_acc": 88.18
+    },
+    "resnet18_scratch": {
+      "status": "complete",
+      "elapsed": 1141.495667,
+      "test_acc": 94.08,
+      "best_val_acc": 94.78
+    },
+    "resnet20_final": {
+      "status": "complete",
+      "elapsed": 2430.3270933,
+      "test_acc": 92.69,
+      "best_val_acc": 93.62
+    },
+    "se_resnet20_final": {
+      "status": "complete",
+      "elapsed": 3183.5284937000006,
+      "test_acc": 92.85,
+      "best_val_acc": 93.88
+    },
+    "resnet18_pretrained_final": {
+      "status": "complete",
+      "elapsed": 670.6181513000001,
+      "test_acc": 95.52,
+      "best_val_acc": 96.1
+    }
+  }
+}

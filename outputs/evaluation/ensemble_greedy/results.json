@@ -1,0 +1,446 @@
+{
+  "name": "ensemble_greedy",
+  "status": "complete",
+  "test_acc": 96.19,
+  "test_acc_top5": 99.91,
+  "test_macro_f1": 96.18791520963474,
+  "test_weighted_f1": 96.18791520963474,
+  "per_class_acc": [
+    98.1,
+    98.3,
+    95.0,
+    90.7,
+    96.6,
+    93.5,
+    98.1,
+    96.6,
+    97.5,
+    97.5
+  ],
+  "per_class_report": {
+    "airplane": {
+      "precision": 0.9627085377821394,
+      "recall": 0.981,
+      "f1-score": 0.9717682020802377,
+      "support": 1000.0
+    },
+    "automobile": {
+      "precision": 0.9800598205383848,
+      "recall": 0.983,
+      "f1-score": 0.9815277084373439,
+      "support": 1000.0
+    },
+    "bird": {
+      "precision": 0.9538152610441767,
+      "recall": 0.95,
+      "f1-score": 0.9519038076152304,
+      "support": 1000.0
+    },
+    "cat": {
+      "precision": 0.9217479674796748,
+      "recall": 0.907,
+      "f1-score": 0.9143145161290323,
+      "support": 1000.0
+    },
+    "deer": {
+      "precision": 0.9573835480673935,
+      "recall": 0.966,
+      "f1-score": 0.9616724738675958,
+      "support": 1000.0
+    },
+    "dog": {
+      "precision": 0.9257425742574258,
+      "recall": 0.935,
+      "f1-score": 0.9303482587064676,
+      "support": 1000.0
+    },
+    "frog": {
+      "precision": 0.9712871287128713,
+      "recall": 0.981,
+      "f1-score": 0.9761194029850746,
+      "support": 1000.0
+    },
+    "horse": {
+      "precision": 0.9837067209775967,
+      "recall": 0.966,
+      "f1-score": 0.9747729566094854,
+      "support": 1000.0
+    },
+    "ship": {
+      "precision": 0.9848484848484849,
+      "recall": 0.975,
+      "f1-score": 0.9798994974874372,
+      "support": 1000.0
+    },
+    "truck": {
+      "precision": 0.9779338014042126,
+      "recall": 0.975,
+      "f1-score": 0.9764646970455684,
+      "support": 1000.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      981,
+      1,
+      5,
+      0,
+      0,
+      0,
+      1,
+      1,
+      10,
+      1
+    ],
+    [
+      1,
+      983,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      15
+    ],
+    [
+      8,
+      0,
+      950,
+      9,
+      15,
+      7,
+      10,
+      0,
+      1,
+      0
+    ],
+    [
+      3,
+      0,
+      11,
+      907,
+      9,
+      55,
+      9,
+      3,
+      0,
+      3
+    ],
+    [
+      1,
+      0,
+      5,
+      11,
+      966,
+      4,
+      6,
+      7,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      6,
+      44,
+      8,
+      935,
+      1,
+      5,
+      1,
+      0
+    ],
+    [
+      2,
+      0,
+      9,
+      6,
+      1,
+      1,
+      981,
+      0,
+      0,
+      0
+    ],
+    [
+      6,
+      0,
+      4,
+      5,
+      9,
+      8,
+      1,
+      966,
+      1,
+      0
+    ],
+    [
+      14,
+      2,
+      4,
+      0,
+      1,
+      0,
+      1,
+      0,
+      975,
+      3
+    ],
+    [
+      3,
+      17,
+      1,
+      2,
+      0,
+      0,
+      0,
+      0,
+      2,
+      975
+    ]
+  ],
+  "top_confusions": [
+    {
+      "true": "cat",
+      "pred": "dog",
+      "count": 55,
+      "ratio_of_true_class": 0.055
+    },
+    {
+      "true": "dog",
+      "pred": "cat",
+      "count": 44,
+      "ratio_of_true_class": 0.044
+    },
+    {
+      "true": "truck",
+      "pred": "automobile",
+      "count": 17,
+      "ratio_of_true_class": 0.017
+    },
+    {
+      "true": "automobile",
+      "pred": "truck",
+      "count": 15,
+      "ratio_of_true_class": 0.015
+    },
+    {
+      "true": "bird",
+      "pred": "deer",
+      "count": 15,
+      "ratio_of_true_class": 0.015
+    },
+    {
+      "true": "ship",
+      "pred": "airplane",
+      "count": 14,
+      "ratio_of_true_class": 0.014
+    },
+    {
+      "true": "cat",
+      "pred": "bird",
+      "count": 11,
+      "ratio_of_true_class": 0.011
+    },
+    {
+      "true": "deer",
+      "pred": "cat",
+      "count": 11,
+      "ratio_of_true_class": 0.011
+    },
+    {
+      "true": "airplane",
+      "pred": "ship",
+      "count": 10,
+      "ratio_of_true_class": 0.01
+    },
+    {
+      "true": "bird",
+      "pred": "frog",
+      "count": 10,
+      "ratio_of_true_class": 0.01
+    }
+  ],
+  "num_test": 10000,
+  "class_names": [
+    "airplane",
+    "automobile",
+    "bird",
+    "cat",
+    "deer",
+    "dog",
+    "frog",
+    "horse",
+    "ship",
+    "truck"
+  ],
+  "history": [],
+  "method": "greedy ensemble selection on validation set",
+  "members": [
+    {
+      "checkpoint": "C:\\Users\\Lenovo\\Downloads\\cifar-10-python\\outputs\\checkpoints\\resnet18_pretrained_final_best.pt",
+      "test_acc": 95.37,
+      "test_acc_tta": 96.0,
+      "best_val_acc": 96.34,
+      "model": {
+        "name": "resnet18_cifar",
+        "num_classes": 10,
+        "attention": null,
+        "attention_reduction": 16,
+        "dropout": 0.0,
+        "pretrained": true
+      },
+      "num_params": 11181642,
+      "weight": 0.3333333333333333
+    },
+    {
+      "checkpoint": "C:\\Users\\Lenovo\\Downloads\\cifar-10-python\\outputs\\checkpoints\\resnet18_pretrained_best.pt",
+      "test_acc": 95.66,
+      "test_acc_tta": 96.05,
+      "best_val_acc": 96.38,
+      "model": {
+        "name": "resnet18_cifar",
+        "num_classes": 10,
+        "attention": null,
+        "attention_reduction": 16,
+        "dropout": 0.0,
+        "pretrained": true
+      },
+      "num_params": 11181642,
+      "weight": 0.3333333333333333
+    },
+    {
+      "checkpoint": "C:\\Users\\Lenovo\\Downloads\\cifar-10-python\\outputs\\checkpoints\\se_resnet20_final_best.pt",
+      "test_acc": 92.64,
+      "test_acc_tta": 93.33,
+      "best_val_acc": 94.02,
+      "model": {
+        "name": "resnet20",
+        "num_classes": 10,
+        "attention": "se",
+        "attention_reduction": 16,
+        "dropout": 0.0,
+        "pretrained": false
+      },
+      "num_params": 275534,
+      "weight": 0.3333333333333333
+    }
+  ],
+  "candidate_members": [
+    {
+      "checkpoint": "C:\\Users\\Lenovo\\Downloads\\cifar-10-python\\outputs\\checkpoints\\resnet18_pretrained_final_best.pt",
+      "test_acc": 95.37,
+      "test_acc_tta": 96.0,
+      "best_val_acc": 96.34,
+      "model": {
+        "name": "resnet18_cifar",
+        "num_classes": 10,
+        "attention": null,
+        "attention_reduction": 16,
+        "dropout": 0.0,
+        "pretrained": true
+      },
+      "num_params": 11181642
+    },
+    {
+      "checkpoint": "C:\\Users\\Lenovo\\Downloads\\cifar-10-python\\outputs\\checkpoints\\resnet18_pretrained_best.pt",
+      "test_acc": 95.66,
+      "test_acc_tta": 96.05,
+      "best_val_acc": 96.38,
+      "model": {
+        "name": "resnet18_cifar",
+        "num_classes": 10,
+        "attention": null,
+        "attention_reduction": 16,
+        "dropout": 0.0,
+        "pretrained": true
+      },
+      "num_params": 11181642
+    },
+    {
+      "checkpoint": "C:\\Users\\Lenovo\\Downloads\\cifar-10-python\\outputs\\checkpoints\\se_resnet20_final_best.pt",
+      "test_acc": 92.64,
+      "test_acc_tta": 93.33,
+      "best_val_acc": 94.02,
+      "model": {
+        "name": "resnet20",
+        "num_classes": 10,
+        "attention": "se",
+        "attention_reduction": 16,
+        "dropout": 0.0,
+        "pretrained": false
+      },
+      "num_params": 275534
+    },
+    {
+      "checkpoint": "C:\\Users\\Lenovo\\Downloads\\cifar-10-python\\outputs\\checkpoints\\resnet20_final_best.pt",
+      "test_acc": 93.08999999999999,
+      "test_acc_tta": 93.47999999999999,
+      "best_val_acc": 93.72,
+      "model": {
+        "name": "resnet20",
+        "num_classes": 10,
+        "attention": null,
+        "attention_reduction": 16,
+        "dropout": 0.0,
+        "pretrained": false
+      },
+      "num_params": 272474
+    },
+    {
+      "checkpoint": "C:\\Users\\Lenovo\\Downloads\\cifar-10-python\\outputs\\checkpoints\\resnet18_scratch_best.pt",
+      "test_acc": 94.35,
+      "test_acc_tta": 94.66,
+      "best_val_acc": 94.62,
+      "model": {
+        "name": "resnet18_cifar",
+        "num_classes": 10,
+        "attention": null,
+        "attention_reduction": 16,
+        "dropout": 0.0,
+        "pretrained": false
+      },
+      "num_params": 11181642
+    },
+    {
+      "checkpoint": "C:\\Users\\Lenovo\\Downloads\\cifar-10-python\\outputs\\checkpoints\\simple_cnn_best.pt",
+      "test_acc": 92.51,
+      "test_acc_tta": 93.38,
+      "best_val_acc": 93.02,
+      "model": {
+        "name": "simple_cnn",
+        "num_classes": 10,
+        "attention": null,
+        "attention_reduction": 16,
+        "dropout": 0.3,
+        "pretrained": false,
+        "width": 64
+      },
+      "num_params": 1148874
+    }
+  ],
+  "greedy_history": [
+    {
+      "step": 1,
+      "model_index": 1,
+      "val_acc": 96.38,
+      "val_nll": 0.14906692504882812
+    },
+    {
+      "step": 2,
+      "model_index": 0,
+      "val_acc": 96.67999999999999,
+      "val_nll": 0.1497364193201065
+    },
+    {
+      "step": 3,
+      "model_index": 2,
+      "val_acc": 96.86,
+      "val_nll": 0.16533537209033966
+    }
+  ],
+  "selection_val_acc": 96.86,
+  "tta": false
+}

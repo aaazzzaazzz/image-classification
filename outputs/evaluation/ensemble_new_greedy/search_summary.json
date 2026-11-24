@@ -1,0 +1,87 @@
+{
+  "weights": {
+    "se_resnet20_final_es_main_best.pt": 0.3333333333333333,
+    "resnet18_pretrained_final_es_main_best.pt": 0.3333333333333333,
+    "resnet18_pretrained_es_main_best.pt": 0.3333333333333333
+  },
+  "val_acc": 96.86,
+  "test_acc": 96.19,
+  "test_acc_tta": 96.48,
+  "candidates": [
+    {
+      "checkpoint": "C:\\Users\\Lenovo\\Downloads\\cifar-10-python\\outputs\\checkpoints\\resnet20_final_es_main_best.pt",
+      "test_acc": 93.08999999999999,
+      "test_acc_tta": 93.47999999999999,
+      "best_val_acc": 93.72,
+      "model": {
+        "name": "resnet20",
+        "num_classes": 10,
+        "attention": null,
+        "attention_reduction": 16,
+        "dropout": 0.0,
+        "pretrained": false
+      },
+      "num_params": 272474
+    },
+    {
+      "checkpoint": "C:\\Users\\Lenovo\\Downloads\\cifar-10-python\\outputs\\checkpoints\\se_resnet20_final_es_main_best.pt",
+      "test_acc": 92.64,
+      "test_acc_tta": 93.33,
+      "best_val_acc": 94.02,
+      "model": {
+        "name": "resnet20",
+        "num_classes": 10,
+        "attention": "se",
+        "attention_reduction": 16,
+        "dropout": 0.0,
+        "pretrained": false
+      },
+      "num_params": 275534
+    },
+    {
+      "checkpoint": "C:\\Users\\Lenovo\\Downloads\\cifar-10-python\\outputs\\checkpoints\\resnet18_pretrained_final_es_main_best.pt",
+      "test_acc": 95.37,
+      "test_acc_tta": 96.0,
+      "best_val_acc": 96.34,
+      "model": {
+        "name": "resnet18_cifar",
+        "num_classes": 10,
+        "attention": null,
+        "attention_reduction": 16,
+        "dropout": 0.0,
+        "pretrained": true
+      },
+      "num_params": 11181642
+    },
+    {
+      "checkpoint": "C:\\Users\\Lenovo\\Downloads\\cifar-10-python\\outputs\\checkpoints\\resnet18_pretrained_es_main_best.pt",
+      "test_acc": 95.66,
+      "test_acc_tta": 96.05,
+      "best_val_acc": 96.38,
+      "model": {
+        "name": "resnet18_cifar",
+        "num_classes": 10,
+        "attention": null,
+        "attention_reduction": 16,
+        "dropout": 0.0,
+        "pretrained": true
+      },
+      "num_params": 11181642
+    },
+    {
+      "checkpoint": "C:\\Users\\Lenovo\\Downloads\\cifar-10-python\\outputs\\checkpoints\\resnet18_scratch_es_main_best.pt",
+      "test_acc": 94.35,
+      "test_acc_tta": 94.66,
+      "best_val_acc": 94.62,
+      "model": {
+        "name": "resnet18_cifar",
+        "num_classes": 10,
+        "attention": null,
+        "attention_reduction": 16,
+        "dropout": 0.0,
+        "pretrained": false
+      },
+      "num_params": 11181642
+    }
+  ]
+}

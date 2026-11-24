@@ -1,0 +1,59 @@
+{
+  "name": "resnet20_label_smoothing_es_main",
+  "seed": 42,
+  "data": {
+    "root": ".",
+    "val_size": 5000,
+    "batch_size": 128,
+    "num_workers": 4,
+    "aug": "basic",
+    "cutout": 0,
+    "randaug_num_ops": 2,
+    "randaug_magnitude": 9,
+    "limit_train": 0,
+    "limit_val": 0,
+    "limit_test": 0
+  },
+  "model": {
+    "name": "resnet20",
+    "num_classes": 10,
+    "attention": null,
+    "attention_reduction": 16,
+    "dropout": 0.0,
+    "pretrained": false
+  },
+  "train": {
+    "epochs": 140,
+    "batch_size": 128,
+    "optimizer": "sgd",
+    "lr": 0.1,
+    "momentum": 0.9,
+    "nesterov": true,
+    "weight_decay": 0.0005,
+    "scheduler": "cosine",
+    "warmup_epochs": 1,
+    "eta_min": 0.0,
+    "step_milestones": [
+      0.5,
+      0.75
+    ],
+    "step_gamma": 0.1,
+    "loss": "ls",
+    "label_smoothing": 0.1,
+    "focal_gamma": 2.0,
+    "focal_alpha": 0.25,
+    "mixup": "none",
+    "mixup_alpha": 0.2,
+    "mixup_prob": 0.5,
+    "ema_decay": 0.0,
+    "grad_clip": 0.0,
+    "amp": true,
+    "early_stop_patience": 20,
+    "early_stop_min_delta": 0.0,
+    "deterministic": false,
+    "test_tta": false,
+    "log_interval": 100,
+    "scheduler_epochs": 60
+  },
+  "description": "消融：标签平滑交叉熵（eps=0.1）"
+}

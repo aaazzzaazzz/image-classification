@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# CIFAR-10 raw data / pretrained cache
+.cache/**/*.partial
+.cache/**/*.lock
+
+# Training checkpoints / logs
+outputs/logs/
+
+# Report and report-generation assets / scripts (not uploaded)
+report/
+scripts/build_report_docx.py
+scripts/make_report_assets.py
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Local training status notes
+TRAINING_STATUS.md

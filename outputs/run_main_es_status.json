@@ -1,0 +1,166 @@
+{
+  "runs": {
+    "resnet20_basic_es_main": {
+      "status": "complete",
+      "stop_reason": "early_stop(no improvement for 20 epochs)",
+      "epochs_run": 81,
+      "best_epoch": 61,
+      "test_acc": 91.98,
+      "orig_test_acc": 92.13,
+      "elapsed": 0.02388500000000704
+    },
+    "simple_cnn_es_main": {
+      "status": "complete",
+      "stop_reason": "early_stop(no improvement for 20 epochs)",
+      "epochs_run": 88,
+      "best_epoch": 68,
+      "test_acc": 92.51,
+      "orig_test_acc": 92.56,
+      "elapsed": 0.019421700000009423
+    },
+    "resnet20_aug_none_es_main": {
+      "status": "complete",
+      "stop_reason": "early_stop(no improvement for 20 epochs)",
+      "epochs_run": 66,
+      "best_epoch": 46,
+      "test_acc": 87.27,
+      "orig_test_acc": 87.22,
+      "elapsed": 0.017051199999968958
+    },
+    "resnet20_aug_cutout_es_main": {
+      "status": "complete",
+      "stop_reason": "early_stop(no improvement for 20 epochs)",
+      "epochs_run": 81,
+      "best_epoch": 61,
+      "test_acc": 91.83,
+      "orig_test_acc": 91.45,
+      "elapsed": 0.01900209999996605
+    },
+    "resnet20_aug_randaugment_es_main": {
+      "status": "complete",
+      "stop_reason": "early_stop(no improvement for 20 epochs)",
+      "epochs_run": 89,
+      "best_epoch": 69,
+      "test_acc": 91.91,
+      "orig_test_acc": 91.77,
+      "elapsed": 0.019086700000002566
+    },
+    "resnet20_mixup_es_main": {
+      "status": "complete",
+      "stop_reason": "early_stop(no improvement for 20 epochs)",
+      "epochs_run": 95,
+      "best_epoch": 75,
+      "test_acc": 91.68,
+      "orig_test_acc": 92.06,
+      "elapsed": 0.023762599999997747
+    },
+    "resnet20_label_smoothing_es_main": {
+      "status": "complete",
+      "stop_reason": "early_stop(no improvement for 20 epochs)",
+      "epochs_run": 77,
+      "best_epoch": 57,
+      "test_acc": 91.71,
+      "orig_test_acc": 92.15,
+      "elapsed": 0.0218417000000386
+    },
+    "resnet20_focal_es_main": {
+      "status": "complete",
+      "stop_reason": "early_stop(no improvement for 20 epochs)",
+      "epochs_run": 85,
+      "best_epoch": 65,
+      "test_acc": 91.2,
+      "orig_test_acc": 91.38,
+      "elapsed": 0.025026599999989685
+    },
+    "resnet20_se_es_main": {
+      "status": "complete",
+      "stop_reason": "early_stop(no improvement for 20 epochs)",
+      "epochs_run": 101,
+      "best_epoch": 81,
+      "test_acc": 91.82,
+      "orig_test_acc": 91.72,
+      "elapsed": 0.021404599999982565
+    },
+    "resnet20_cbam_es_main": {
+      "status": "complete",
+      "stop_reason": "early_stop(no improvement for 20 epochs)",
+      "epochs_run": 94,
+      "best_epoch": 74,
+      "test_acc": 91.36,
+      "orig_test_acc": 92.11,
+      "elapsed": 0.019538500000010117
+    },
+    "resnet20_step_es_main": {
+      "status": "complete",
+      "stop_reason": "early_stop(no improvement for 20 epochs)",
+      "epochs_run": 88,
+      "best_epoch": 68,
+      "test_acc": 91.52,
+      "orig_test_acc": 91.39,
+      "elapsed": 0.00597120000003315
+    },
+    "resnet20_onecycle_es_main": {
+      "status": "complete",
+      "stop_reason": "early_stop(no improvement for 20 epochs)",
+      "epochs_run": 79,
+      "best_epoch": 59,
+      "test_acc": 91.58,
+      "orig_test_acc": 91.55,
+      "elapsed": 1581.3780632
+    },
+    "resnet18_pretrained_es_main": {
+      "status": "complete",
+      "stop_reason": "early_stop(no improvement for 20 epochs)",
+      "epochs_run": 54,
+      "best_epoch": 34,
+      "test_acc": 95.65,
+      "orig_test_acc": 95.47,
+      "elapsed": 0.01754590000018652
+    },
+    "mobilenet_v3_pretrained_es_main": {
+      "status": "complete",
+      "stop_reason": "early_stop(no improvement for 20 epochs)",
+      "epochs_run": 57,
+      "best_epoch": 37,
+      "test_acc": 88.12,
+      "orig_test_acc": 88.03,
+      "elapsed": 0.012664799999811294
+    },
+    "resnet18_scratch_es_main": {
+      "status": "complete",
+      "stop_reason": "early_stop(no improvement for 20 epochs)",
+      "epochs_run": 83,
+      "best_epoch": 63,
+      "test_acc": 94.35,
+      "orig_test_acc": 94.08,
+      "elapsed": 0.02362360000006447
+    },
+    "resnet20_final_es_main": {
+      "status": "complete",
+      "stop_reason": "early_stop(no improvement for 40 epochs)",
+      "epochs_run": 175,
+      "best_epoch": 135,
+      "test_acc": 93.07,
+      "orig_test_acc": 92.69,
+      "elapsed": 0.014379400000052556
+    },
+    "se_resnet20_final_es_main": {
+      "status": "complete",
+      "stop_reason": "early_stop(no improvement for 40 epochs)",
+      "epochs_run": 155,
+      "best_epoch": 115,
+      "test_acc": 92.64,
+      "orig_test_acc": 92.85,
+      "elapsed": 4966.6921766000005
+    },
+    "resnet18_pretrained_final_es_main": {
+      "status": "complete",
+      "stop_reason": "early_stop(no improvement for 15 epochs)",
+      "epochs_run": 36,
+      "best_epoch": 21,
+      "test_acc": 95.37,
+      "orig_test_acc": 95.52,
+      "elapsed": 654.2333117000007
+    }
+  }
+}

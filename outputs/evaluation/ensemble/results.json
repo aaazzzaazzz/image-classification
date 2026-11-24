@@ -1,0 +1,334 @@
+{
+  "name": "ensemble",
+  "status": "complete",
+  "test_acc": 95.21,
+  "test_acc_top5": 99.94,
+  "test_macro_f1": 95.20322836323695,
+  "test_weighted_f1": 95.20322836323693,
+  "per_class_acc": [
+    96.8,
+    97.89999999999999,
+    93.4,
+    88.4,
+    96.0,
+    92.5,
+    97.0,
+    96.7,
+    96.89999999999999,
+    96.5
+  ],
+  "per_class_report": {
+    "airplane": {
+      "precision": 0.9546351084812623,
+      "recall": 0.968,
+      "f1-score": 0.9612711022840119,
+      "support": 1000.0
+    },
+    "automobile": {
+      "precision": 0.9712301587301587,
+      "recall": 0.979,
+      "f1-score": 0.9750996015936255,
+      "support": 1000.0
+    },
+    "bird": {
+      "precision": 0.9463019250253293,
+      "recall": 0.934,
+      "f1-score": 0.9401107196779064,
+      "support": 1000.0
+    },
+    "cat": {
+      "precision": 0.9038854805725971,
+      "recall": 0.884,
+      "f1-score": 0.8938321536905965,
+      "support": 1000.0
+    },
+    "deer": {
+      "precision": 0.947680157946693,
+      "recall": 0.96,
+      "f1-score": 0.9538002980625931,
+      "support": 1000.0
+    },
+    "dog": {
+      "precision": 0.9185700099304865,
+      "recall": 0.925,
+      "f1-score": 0.9217737917289487,
+      "support": 1000.0
+    },
+    "frog": {
+      "precision": 0.9603960396039604,
+      "recall": 0.97,
+      "f1-score": 0.9651741293532339,
+      "support": 1000.0
+    },
+    "horse": {
+      "precision": 0.9797365754812564,
+      "recall": 0.967,
+      "f1-score": 0.9733266230498239,
+      "support": 1000.0
+    },
+    "ship": {
+      "precision": 0.96996996996997,
+      "recall": 0.969,
+      "f1-score": 0.9694847423711856,
+      "support": 1000.0
+    },
+    "truck": {
+      "precision": 0.9679037111334002,
+      "recall": 0.965,
+      "f1-score": 0.9664496745117677,
+      "support": 1000.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      968,
+      1,
+      8,
+      5,
+      1,
+      0,
+      1,
+      1,
+      13,
+      2
+    ],
+    [
+      2,
+      979,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      3,
+      16
+    ],
+    [
+      14,
+      0,
+      934,
+      10,
+      13,
+      10,
+      15,
+      2,
+      2,
+      0
+    ],
+    [
+      4,
+      1,
+      13,
+      884,
+      15,
+      58,
+      14,
+      3,
+      3,
+      5
+    ],
+    [
+      2,
+      0,
+      8,
+      12,
+      960,
+      3,
+      6,
+      8,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      5,
+      47,
+      13,
+      925,
+      3,
+      5,
+      0,
+      0
+    ],
+    [
+      5,
+      0,
+      9,
+      11,
+      1,
+      2,
+      970,
+      1,
+      0,
+      1
+    ],
+    [
+      4,
+      0,
+      4,
+      6,
+      9,
+      9,
+      0,
+      967,
+      0,
+      1
+    ],
+    [
+      12,
+      5,
+      4,
+      2,
+      1,
+      0,
+      0,
+      0,
+      969,
+      7
+    ],
+    [
+      2,
+      21,
+      2,
+      1,
+      0,
+      0,
+      1,
+      0,
+      8,
+      965
+    ]
+  ],
+  "top_confusions": [
+    {
+      "true": "cat",
+      "pred": "dog",
+      "count": 58,
+      "ratio_of_true_class": 0.058
+    },
+    {
+      "true": "dog",
+      "pred": "cat",
+      "count": 47,
+      "ratio_of_true_class": 0.047
+    },
+    {
+      "true": "truck",
+      "pred": "automobile",
+      "count": 21,
+      "ratio_of_true_class": 0.021
+    },
+    {
+      "true": "automobile",
+      "pred": "truck",
+      "count": 16,
+      "ratio_of_true_class": 0.016
+    },
+    {
+      "true": "bird",
+      "pred": "frog",
+      "count": 15,
+      "ratio_of_true_class": 0.015
+    },
+    {
+      "true": "cat",
+      "pred": "deer",
+      "count": 15,
+      "ratio_of_true_class": 0.015
+    },
+    {
+      "true": "bird",
+      "pred": "airplane",
+      "count": 14,
+      "ratio_of_true_class": 0.014
+    },
+    {
+      "true": "cat",
+      "pred": "frog",
+      "count": 14,
+      "ratio_of_true_class": 0.014
+    },
+    {
+      "true": "airplane",
+      "pred": "ship",
+      "count": 13,
+      "ratio_of_true_class": 0.013
+    },
+    {
+      "true": "bird",
+      "pred": "deer",
+      "count": 13,
+      "ratio_of_true_class": 0.013
+    }
+  ],
+  "num_test": 10000,
+  "class_names": [
+    "airplane",
+    "automobile",
+    "bird",
+    "cat",
+    "deer",
+    "dog",
+    "frog",
+    "horse",
+    "ship",
+    "truck"
+  ],
+  "history": [],
+  "members": [
+    {
+      "checkpoint": "outputs\\checkpoints\\resnet20_final_best.pt",
+      "weight": 0.3333333333333333,
+      "test_acc": 93.08999999999999,
+      "best_val_acc": 93.72,
+      "model": {
+        "name": "resnet20",
+        "num_classes": 10,
+        "attention": null,
+        "attention_reduction": 16,
+        "dropout": 0.0,
+        "pretrained": false
+      },
+      "num_params": 272474
+    },
+    {
+      "checkpoint": "outputs\\checkpoints\\se_resnet20_final_best.pt",
+      "weight": 0.3333333333333333,
+      "test_acc": 92.64,
+      "best_val_acc": 94.02,
+      "model": {
+        "name": "resnet20",
+        "num_classes": 10,
+        "attention": "se",
+        "attention_reduction": 16,
+        "dropout": 0.0,
+        "pretrained": false
+      },
+      "num_params": 275534
+    },
+    {
+      "checkpoint": "outputs\\checkpoints\\resnet18_pretrained_final_best.pt",
+      "weight": 0.3333333333333333,
+      "test_acc": 95.37,
+      "best_val_acc": 96.34,
+      "model": {
+        "name": "resnet18_cifar",
+        "num_classes": 10,
+        "attention": null,
+        "attention_reduction": 16,
+        "dropout": 0.0,
+        "pretrained": true
+      },
+      "num_params": 11181642
+    }
+  ],
+  "tta": false,
+  "ensemble_weights": [
+    0.3333333333333333,
+    0.3333333333333333,
+    0.3333333333333333
+  ],
+  "num_params": 11729650
+}
