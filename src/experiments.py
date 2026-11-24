@@ -214,6 +214,22 @@ EXPERIMENTS = {
             "early_stop_patience": 15,
         },
     ),
+    "resnet20_kd": make(
+        "resnet20_kd",
+        "ResNet-20 + 知识蒸馏损失：教师为 95.65% 的预训练 ResNet-18，T=4、alpha=0.3",
+        data={"aug": "basic"},
+        train={
+            "epochs": 160,
+            "scheduler_epochs": 120,
+            "loss": "ce",
+            "ema_decay": 0.999,
+            "early_stop_patience": 20,
+            "distill_probs": "outputs/teacher_probs/resnet18_train_t4.npy",
+            "distill_alpha": 0.7,
+            "distill_temp": 4.0,
+            "test_tta": True,
+        },
+    ),
 }
 
 

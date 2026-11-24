@@ -13,8 +13,9 @@ from typing import Dict, Optional
 
 import numpy as np
 import torch
+from torch.utils.data import DataLoader
 
-from .data import MixupCutmix, build_dataloaders
+from .data import MixupCutmix, SoftLabelDataset, build_dataloaders
 from .engine import (
     ModelEMA,
     build_optimizer,
@@ -37,6 +38,7 @@ from .utils import (
     load_json,
     save_json,
     set_seed,
+    worker_init_fn,
 )
 from .visualize import (
     plot_confusion_matrix,
@@ -138,9 +140,41 @@ def run_experiment(
             f"batch_size={meta['batch_size']} | 类别={meta['classes']}"
         )
 
+        # 离线知识蒸馏：用教师概率替换训练集标签，避免每个 batch 额外前向教师
+        if train_cfg.get("distill_probs"):
+            probs = np.load(str(train_cfg["distill_probs"]), allow_pickle=False)
+            train_loader = DataLoader(
+                SoftLabelDataset(train_loader.dataset, probs),
+                batch_size=train_loader.batch_size,
+                shuffle=True,
+                num_workers=train_loader.num_workers,
+                pin_memory=train_loader.pin_memory,
+                drop_last=True,
+                persistent_workers=train_loader.num_workers > 0,
+                worker_init_fn=worker_init_fn,
+            )
+            print(f"离线 KD: {train_cfg['distill_probs']} | alpha={train_cfg.get('distill_alpha', 0.7)} | T={train_cfg.get('distill_temp', 4.0)}")
+
         model = build_model(cfg.get("model", {})).to(device)
         num_params = count_parameters(model)
         print(f"模型: {cfg.get('model', {}).get('name')} | 参数量: {num_params / 1e6:.3f}M")
+
+        # 知识蒸馏教师：只前向、不更新；用于 KD 损失
+        teacher = None
+        teacher_path = train_cfg.get("distill_teacher")
+        if teacher_path:
+            teacher_cfg = {
+                "name": str(train_cfg.get("distill_teacher_model", "resnet18_cifar")),
+                "pretrained": False,
+            }
+            teacher = build_model(teacher_cfg).to(device)
+            teacher_ckpt = torch.load(teacher_path, map_location=device, weights_only=False)
+            state = teacher_ckpt.get("model", teacher_ckpt)
+            teacher.load_state_dict(state)
+            teacher.eval()
+            for param in teacher.parameters():
+                param.requires_grad_(False)
+            print(f"KD 教师: {teacher_path} | alpha={train_cfg.get('distill_alpha', 0.3)} | T={train_cfg.get('distill_temp', 4.0)}")
 
         criterion = build_criterion(train_cfg).to(device)
         optimizer = build_optimizer(model, train_cfg)
@@ -182,6 +216,9 @@ def run_experiment(
                 scheduler=scheduler,
                 step_per_batch=step_per_batch,
                 log_interval=int(train_cfg.get("log_interval", 100)),
+                teacher=teacher,
+                distill_alpha=float(train_cfg.get("distill_alpha", 0.3)),
+                distill_temp=float(train_cfg.get("distill_temp", 4.0)),
             )
             val_metrics, _, _ = evaluate(model, val_loader, criterion, device)
             if not step_per_batch and scheduler is not None:

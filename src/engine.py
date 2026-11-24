@@ -167,14 +167,27 @@ def train_one_epoch(
     scheduler=None,
     step_per_batch: bool = False,
     log_interval: int = 100,
+    teacher: Optional[nn.Module] = None,
+    distill_alpha: float = 0.3,
+    distill_temp: float = 4.0,
 ) -> Dict[str, float]:
-    """训练一个 epoch，返回平均 loss / acc / lr。"""
+    """训练一个 epoch，返回平均 loss / acc / lr。
+
+    teacher 不为空时使用知识蒸馏损失：
+    alpha * CE + (1-alpha) * T^2 * KL(teacher/T || student/T)。
+    """
     model.train()
     loss_meter = AverageMeter()
     acc_meter = AverageMeter()
     use_amp = scaler is not None and scaler.is_enabled()
 
-    for step, (images, targets) in enumerate(loader):
+    for step, batch in enumerate(loader):
+        if len(batch) == 3:
+            images, targets, soft_targets = batch
+            soft_targets = soft_targets.to(device, non_blocking=True)
+        else:
+            images, targets = batch
+            soft_targets = None
         images = images.to(device, non_blocking=True)
         targets = targets.to(device, non_blocking=True)
 
@@ -182,12 +195,34 @@ def train_one_epoch(
         if mixup is not None and mixup.enabled:
             images, y_a, y_b, lam = mixup(images, targets)
 
+        teacher_logits = None
+        if teacher is not None:
+            # 教师只做前向，不参与梯度；与学生在同一批增强图像上对齐
+            with torch.no_grad():
+                teacher_logits = teacher(images)
+
         with torch.amp.autocast(device_type=device.type, enabled=use_amp):
             logits = model(images)
             if lam < 1.0:
                 loss = lam * criterion(logits, y_a) + (1.0 - lam) * criterion(logits, y_b)
             else:
                 loss = criterion(logits, y_a)
+            if soft_targets is not None and lam == 1.0:
+                # 离线教师概率已按温度 T 做 softmax，直接对齐
+                kd = F.kl_div(
+                    F.log_softmax(logits / distill_temp, dim=1),
+                    soft_targets,
+                    reduction="batchmean",
+                ) * (distill_temp ** 2)
+                loss = distill_alpha * loss + (1.0 - distill_alpha) * kd
+            elif teacher_logits is not None and lam == 1.0:
+                # 在线教师：KL 散度按温度缩放；乘 T^2 保持梯度量级
+                kd = F.kl_div(
+                    F.log_softmax(logits / distill_temp, dim=1),
+                    F.softmax(teacher_logits / distill_temp, dim=1),
+                    reduction="batchmean",
+                ) * (distill_temp ** 2)
+                loss = distill_alpha * loss + (1.0 - distill_alpha) * kd
 
         optimizer.zero_grad(set_to_none=True)
         if scaler is not None:

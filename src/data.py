@@ -202,6 +202,23 @@ class CIFAR10Dataset(Dataset):
         return img, label
 
 
+class SoftLabelDataset(Dataset):
+    """在训练集上附加教师 softmax 概率，返回 ``(image, label, soft_target)``。"""
+
+    def __init__(self, base: Dataset, probs: np.ndarray) -> None:
+        if len(base) != len(probs):
+            raise ValueError(f"教师概率数量 {len(probs)} 与训练集 {len(base)} 不一致")
+        self.base = base
+        self.probs = torch.from_numpy(np.asarray(probs, dtype=np.float32))
+
+    def __len__(self) -> int:
+        return len(self.base)
+
+    def __getitem__(self, index: int):
+        image, label = self.base[index]
+        return image, label, self.probs[index]
+
+
 def build_dataloaders(cfg: dict) -> Tuple[DataLoader, DataLoader, DataLoader, dict]:
     """构建 train / val / test 三个 DataLoader。
 

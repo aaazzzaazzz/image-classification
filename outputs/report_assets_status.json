@@ -1,5 +1,5 @@
 {
   "best_single_model": "resnet18_pretrained",
   "best_single_test_acc": 95.65,
-  "num_experiments": 22
+  "num_experiments": 23
 }
