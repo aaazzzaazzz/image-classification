@@ -111,6 +111,17 @@ def build_scheduler(
             return eta_min + (1.0 - eta_min) * 0.5 * (1.0 + math.cos(math.pi * progress))
 
         return torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda), False
+    if name in ("cosine_restarts", "sgdr"):
+        # SGDR：周期性重启，T_0 为第一个周期长度，T_mult 为周期倍增系数
+        return (
+            torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
+                optimizer,
+                T_0=int(cfg.get("restart_t0", 20)),
+                T_mult=int(cfg.get("restart_t_mult", 2)),
+                eta_min=float(cfg.get("eta_min", 0.0)),
+            ),
+            False,
+        )
     if name == "step":
         milestones = cfg.get("step_milestones", [0.5, 0.75])
         if all(isinstance(m, float) and m <= 1.0 for m in milestones):

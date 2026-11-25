@@ -154,6 +154,18 @@ EXPERIMENTS = {
         "CBAM-ResNet-20（通道+空间注意力）",
         model={"attention": "cbam"},
     ),
+    "resnet20_eca": make(
+        "resnet20_eca",
+        "ECA-ResNet-20（轻量通道注意力，无降维）",
+        model={"attention": "eca"},
+        train={"epochs": 140, "scheduler_epochs": 60, "early_stop_patience": 20},
+    ),
+    "resnet20_res_se": make(
+        "resnet20_res_se",
+        "零初始化残差 SE-ResNet-20（gamma=0 时恒等映射）",
+        model={"attention": "se_res"},
+        train={"epochs": 140, "scheduler_epochs": 60, "early_stop_patience": 20},
+    ),
     # ------------------------------------------------------------------ #
     # 学习率调度策略
     # ------------------------------------------------------------------ #
@@ -166,6 +178,28 @@ EXPERIMENTS = {
         "resnet20_onecycle",
         "消融：OneCycle 学习率调度（max_lr=0.1, pct_start=0.3）",
         train={"scheduler": "onecycle", "warmup_epochs": 0, "onecycle_pct_start": 0.3},
+    ),
+    "resnet20_sgdr": make(
+        "resnet20_sgdr",
+        "SGDR：CosineAnnealingWarmRestarts（T_0=20, T_mult=2）",
+        train={
+            "scheduler": "cosine_restarts",
+            "restart_t0": 20,
+            "restart_t_mult": 2,
+            "epochs": 140,
+            "scheduler_epochs": 60,
+            "early_stop_patience": 20,
+        },
+    ),
+    "resnet20_warmup5": make(
+        "resnet20_warmup5",
+        "Cosine + 5 epoch warmup（更长预热，降低前期震荡）",
+        train={
+            "warmup_epochs": 5,
+            "epochs": 140,
+            "scheduler_epochs": 60,
+            "early_stop_patience": 20,
+        },
     ),
     # ------------------------------------------------------------------ #
     # 综合改进模型（用于最终性能、Grad-CAM 与集成）
