@@ -154,28 +154,10 @@ EXPERIMENTS = {
         "CBAM-ResNet-20（通道+空间注意力）",
         model={"attention": "cbam"},
     ),
-    "resnet20_eca": make(
-        "resnet20_eca",
-        "ECA-ResNet-20（轻量通道注意力，无降维）",
-        model={"attention": "eca"},
-        train={"epochs": 140, "scheduler_epochs": 60, "early_stop_patience": 20},
-    ),
-    "resnet20_res_se": make(
-        "resnet20_res_se",
-        "零初始化残差 SE-ResNet-20（gamma=0 时恒等映射）",
-        model={"attention": "se_res"},
-        train={"epochs": 140, "scheduler_epochs": 60, "early_stop_patience": 20},
-    ),
     "simple_cnn_se": make(
         "simple_cnn_se",
         "SimpleCNN + SE 通道注意力（每个 stage 后）",
         model={"name": "simple_cnn", "attention": "se"},
-        train={"epochs": 140, "scheduler_epochs": 60, "early_stop_patience": 20},
-    ),
-    "simple_cnn_res_se": make(
-        "simple_cnn_res_se",
-        "SimpleCNN + 零初始化残差 SE（gamma=0 恒等）",
-        model={"name": "simple_cnn", "attention": "se_res"},
         train={"epochs": 140, "scheduler_epochs": 60, "early_stop_patience": 20},
     ),
     # ------------------------------------------------------------------ #

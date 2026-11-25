@@ -30,19 +30,6 @@ class SEBlock(nn.Module):
         return x * scale
 
 
-class ResidualSEBlock(nn.Module):
-    """零初始化残差 SE：gamma=0 时等价于恒等映射，训练中再学习门控强度。"""
-
-    def __init__(self, channels: int, reduction: int = 16) -> None:
-        super().__init__()
-        self.se = SEBlock(channels, reduction)
-        self.gamma = nn.Parameter(torch.zeros(1))
-
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        scale = self.se.fc(self.se.avg_pool(x))
-        return x * (1.0 + self.gamma * (scale - 1.0))
-
-
 class ChannelAttention(nn.Module):
     """CBAM 的通道注意力分支（同时使用平均池化与最大池化）。"""
 
@@ -120,8 +107,6 @@ def build_attention(name: str | None, channels: int, reduction: int = 16) -> nn.
         return None
     if name == "se":
         return SEBlock(channels, reduction)
-    if name in ("se_res", "residual_se"):
-        return ResidualSEBlock(channels, reduction)
     if name == "cbam":
         return CBAM(channels, reduction)
     if name == "eca":
