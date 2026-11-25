@@ -18,6 +18,7 @@ pip install -r requirements.txt
 ```
 
 `requirements.txt` 包含：torch、torchvision、numpy、pandas、matplotlib、seaborn、scikit-learn。
+本机验证版本：Python 3.12.7、torch 2.7.1+cu118、torchvision 0.22.1+cu118、numpy 1.26.4。
 首次运行预训练模型时会自动从 PyTorch 官方源下载 ImageNet 权重，并缓存到项目内的 `.cache/torch/`。
 
 GPU 可选；CPU 也能运行（把 `--device cpu` 或在配置中关闭 `amp`），但完整实验会非常慢。
@@ -97,11 +98,7 @@ python -m src.train --list
 
 # 7) 单模型评估 / TTA / 三模型等权集成
 python -m src.evaluate --checkpoint outputs/checkpoints/resnet18_pretrained_final_best.pt --tta
-python -m src.evaluate --ensemble \
-  outputs/checkpoints/resnet20_final_best.pt \
-  outputs/checkpoints/se_resnet20_final_best.pt \
-  outputs/checkpoints/resnet18_pretrained_final_best.pt \
-  --name ensemble --tta
+python -m src.evaluate --ensemble outputs/checkpoints/resnet20_final_best.pt outputs/checkpoints/se_resnet20_final_best.pt outputs/checkpoints/resnet18_pretrained_final_best.pt --name ensemble --tta
 
 # 8) 验证集贪心加权集成（最终 96.48% 的结果）
 python scripts/ensemble_search.py
