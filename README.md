@@ -110,6 +110,9 @@ python scripts/ensemble_search.py
 # 9) 知识蒸馏：先预计算教师概率，再训练 KD 学生
 python scripts/precompute_teacher_probs.py
 python scripts/run_experiments.py --group kd --force
+
+# 10) 学习率调度 vs 固定学习率
+python scripts/run_experiments.py --group lr --force
 ```
 
 Windows 下如果 DataLoader 多进程报错，可加 `--num-workers 0`（例如
@@ -134,14 +137,14 @@ Windows 下如果 DataLoader 多进程报错，可加 `--num-workers 0`（例如
 |---|---|
 | 预训练模型微调 | `resnet18_pretrained`、`mobilenet_v3_pretrained`、`resnet18_pretrained_final` |
 | 对比不同架构 | `simple_cnn`、`resnet20_basic`、`resnet18_scratch`、两个预训练模型 |
-| 注意力机制 | `resnet20_se`（SE）、`resnet20_cbam`（CBAM）、`se_resnet20_final` |
-| 学习率调度 / 早停 | `resnet20_step`、`resnet20_onecycle`、cosine + warmup；所有实验均带早停 |
+| 注意力机制 | `resnet20_se`、`resnet20_cbam`、`se_resnet20_final`；`simple_cnn_se_do03`、`simple_cnn_cbam_do03`（均固定 Dropout=0.3） |
+| 学习率调度 / 早停 | `resnet20_step`、`resnet20_onecycle`、`resnet20_constant`、`resnet20_constant005`、`resnet20_sgdr`、`resnet20_warmup5`；所有实验均带早停 |
 | 数据增强策略对比 | `resnet20_aug_none`、`resnet20_basic`、`resnet20_aug_cutout`、`resnet20_aug_randaugment`、`resnet20_mixup` |
 | 改进损失函数 | `resnet20_label_smoothing`、`resnet20_focal`、`resnet20_kd`（知识蒸馏） |
 | 可解释性分析 | `fig_gradcam_correct.png`、`fig_gradcam_errors.png`、`fig_feature_maps_*.png` |
 | 额外创新 | EMA 权重平均、TTA、三模型概率集成、Grad-CAM 误差分析 |
 
-### 5.3 实验清单（18 个主实验 + KD）
+### 5.3 实验清单（18 个主实验 + 扩展）
 
 | 实验名 | 说明 | 关键设置（原epoch数，改动后数量在后面） |
 |---|---|---|
@@ -164,8 +167,14 @@ Windows 下如果 DataLoader 多进程报错，可加 `--num-workers 0`（例如
 | `se_resnet20_final` | SE + RandAugment + 标签平滑 + EMA | 120 epoch |
 | `resnet18_pretrained_final` | 预训练 ResNet-18 + Cutout + 标签平滑 + EMA | 30 epoch |
 | `resnet20_kd` | ResNet-20 + 知识蒸馏（教师 ResNet-18） | 120 epoch，T=4，alpha=0.7 |
+| `simple_cnn_se_do03` | SimpleCNN + SE，控制 Dropout=0.3 | 140 epoch 预算，60 轮日程 |
+| `simple_cnn_cbam_do03` | SimpleCNN + CBAM，控制 Dropout=0.3 | 140 epoch 预算，60 轮日程 |
+| `resnet20_constant` | 固定学习率 lr=0.1 | 140 epoch 预算 |
+| `resnet20_constant005` | 固定学习率 lr=0.05 | 140 epoch 预算 |
+| `resnet20_sgdr` | SGDR 周期性重启 | 140 epoch 预算，60 轮日程 |
+| `resnet20_warmup5` | Cosine + 5 epoch warmup | 140 epoch 预算，60 轮日程 |
   
-**表中 epoch 为学习率日程长度；18 个主实验的最大训练预算统一设为 `2×日程 + patience`，因此 18 个主实验全部触发早停；`resnet20_kd` 是额外的损失函数实验。**
+**表中 epoch 为学习率日程长度；18 个主实验的最大训练预算统一设为 `2×日程 + patience`，因此 18 个主实验全部触发早停；其余为损失函数、注意力和学习率控制实验。**
 
 除被研究因素外，同一组消融实验的超参数完全一致（SGD 0.1、momentum 0.9、weight decay 5e-4、
 batch size 128、cosine + 1 epoch warmup、AMP）。
@@ -176,6 +185,8 @@ batch size 128、cosine + 1 epoch warmup、AMP）。
 |---|---|---|
 | ResNet-20 基线 | 91.98 | 60 轮日程，RandomCrop+Flip，早停 81 轮触发 |
 | SimpleCNN | 92.51 | 1.15 M 参数 |
+| SimpleCNN + SE（Dropout=0.3） | 92.41 | 控制 Dropout 后无提升 |
+| **SimpleCNN + CBAM（Dropout=0.3）** | **93.26** | 比基线 +0.75 |
 | ResNet-18 从零训练 | 94.35 | 60 轮日程，早停 83 轮触发 |
 | ResNet-18 预训练微调 | 95.65 | 25 轮日程，早停 54 轮触发 |
 | ResNet-18 预训练 final（Cutout+LS+EMA） | 95.37 | TTA 96.00 |
@@ -187,7 +198,9 @@ batch size 128、cosine + 1 epoch warmup、AMP）。
 主要消融结论：
 
 - 无数据增强时测试准确率仅 87.27%，RandomCrop+Flip 带来 +4.71，是最大的单项正则收益；
-- Cutout、RandAugment、Mixup、标签平滑、SE/CBAM 与 MultiStep/OneCycle 均未超过基础基线，说明增强/正则强度需与训练日程匹配；
+- Cutout、RandAugment、Mixup、标签平滑与 MultiStep/OneCycle 均未超过基础基线，说明增强/正则强度需与训练日程匹配；
+- ResNet-20 上 SE/CBAM 无收益；SimpleCNN 控制 Dropout=0.3 后，SE 为 92.41%（−0.10），CBAM 为 93.26%（+0.75），只有 CBAM 稳定提升；
+- 学习率调度本身很关键：Cosine 91.98%，固定 lr=0.1 仅 83.49%，固定 lr=0.05 仅 85.68%；
 - 120 轮日程的 ResNet-20 final 为 93.07%（TTA 93.48%），SE 版本 92.64%（TTA 93.33%）；
 - 知识蒸馏 `resnet20_kd` 达到 93.27%（TTA 93.97%），比 ResNet-20 final 高 0.20/0.49，是损失函数改进中最有效的方向；
 - 预训练 ResNet-18 是最有效的单项手段；验证集贪心加权集成（SE final + 预训练 final + 预训练）达到 96.19%，TTA 后 96.48%；
@@ -205,6 +218,8 @@ batch size 128、cosine + 1 epoch warmup、AMP）。
 | 损失函数对比 | `outputs/figures/fig_loss_comparison.png` |
 | 注意力对比 | `outputs/figures/fig_attention_comparison.png` |
 | 调度器对比 | `outputs/figures/fig_scheduler_comparison.png` |
+| 调度 vs 固定 LR | `outputs/figures/fig_scheduler_fixed_comparison.png` |
+| 全部模型 + 集成 | `outputs/figures/fig_all_models_comparison.png` |
 | 最终模型 + 集成 | `outputs/figures/fig_final_comparison.png` |
 | 误分类样本 | `outputs/figures/fig_misclassified.png` |
 | 混淆对 | `outputs/figures/fig_top_confusions.png` |
