@@ -166,6 +166,18 @@ EXPERIMENTS = {
         model={"attention": "se_res"},
         train={"epochs": 140, "scheduler_epochs": 60, "early_stop_patience": 20},
     ),
+    "simple_cnn_se": make(
+        "simple_cnn_se",
+        "SimpleCNN + SE 通道注意力（每个 stage 后）",
+        model={"name": "simple_cnn", "attention": "se"},
+        train={"epochs": 140, "scheduler_epochs": 60, "early_stop_patience": 20},
+    ),
+    "simple_cnn_res_se": make(
+        "simple_cnn_res_se",
+        "SimpleCNN + 零初始化残差 SE（gamma=0 恒等）",
+        model={"name": "simple_cnn", "attention": "se_res"},
+        train={"epochs": 140, "scheduler_epochs": 60, "early_stop_patience": 20},
+    ),
     # ------------------------------------------------------------------ #
     # 学习率调度策略
     # ------------------------------------------------------------------ #

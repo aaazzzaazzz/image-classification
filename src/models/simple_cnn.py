@@ -6,6 +6,8 @@ from __future__ import annotations
 import torch
 import torch.nn as nn
 
+from .attention import build_attention
+
 
 def conv_bn_relu(in_channels: int, out_channels: int, kernel_size: int = 3) -> nn.Sequential:
     padding = kernel_size // 2
@@ -21,23 +23,34 @@ class SimpleCNN(nn.Module):
 
     结构：3 个 stage，每个 stage 两个 3×3 卷积 + BN + ReLU，然后 2×2 最大池化；
     最后全局平均池化 + Dropout + 全连接分类器。
-    该模型作为“从零训练”的基线，参数量约 1M。
+    可选在每个 stage 后插入 SE / CBAM / ECA 注意力。
     """
 
-    def __init__(self, num_classes: int = 10, width: int = 64, dropout: float = 0.3) -> None:
+    def __init__(
+        self,
+        num_classes: int = 10,
+        width: int = 64,
+        dropout: float = 0.3,
+        attention: str | None = None,
+        attention_reduction: int = 16,
+    ) -> None:
         super().__init__()
         w = int(width)
-        self.features = nn.Sequential(
+        self.stage1 = nn.Sequential(
             conv_bn_relu(3, w),
             conv_bn_relu(w, w),
-            nn.MaxPool2d(2),  # 16x16
+        )
+        self.stage2 = nn.Sequential(
             conv_bn_relu(w, w * 2),
             conv_bn_relu(w * 2, w * 2),
-            nn.MaxPool2d(2),  # 8x8
+        )
+        self.stage3 = nn.Sequential(
             conv_bn_relu(w * 2, w * 4),
             conv_bn_relu(w * 4, w * 4),
-            nn.MaxPool2d(2),  # 4x4
         )
+        self.attn1 = build_attention(attention, w, attention_reduction)
+        self.attn2 = build_attention(attention, w * 2, attention_reduction)
+        self.attn3 = build_attention(attention, w * 4, attention_reduction)
         self.pool = nn.AdaptiveAvgPool2d(1)
         self.classifier = nn.Sequential(
             nn.Flatten(),
@@ -58,6 +71,17 @@ class SimpleCNN(nn.Module):
                 nn.init.zeros_(m.bias)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        x = self.features(x)
+        x = self.stage1(x)
+        if self.attn1 is not None:
+            x = self.attn1(x)
+        x = nn.functional.max_pool2d(x, 2)
+        x = self.stage2(x)
+        if self.attn2 is not None:
+            x = self.attn2(x)
+        x = nn.functional.max_pool2d(x, 2)
+        x = self.stage3(x)
+        if self.attn3 is not None:
+            x = self.attn3(x)
+        x = nn.functional.max_pool2d(x, 2)
         x = self.pool(x)
         return self.classifier(x)

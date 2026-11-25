@@ -50,6 +50,8 @@ def build_model(model_cfg: dict) -> nn.Module:
             num_classes=num_classes,
             width=int(cfg.get("width", 64)),
             dropout=float(cfg.get("dropout", 0.3)),
+            attention=attention,
+            attention_reduction=reduction,
         )
 
     m = re.fullmatch(r"resnet(\d+)", name)
