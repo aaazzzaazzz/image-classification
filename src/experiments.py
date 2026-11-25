@@ -166,6 +166,18 @@ EXPERIMENTS = {
         model={"name": "simple_cnn", "attention": "cbam"},
         train={"epochs": 140, "scheduler_epochs": 60, "early_stop_patience": 20},
     ),
+    "simple_cnn_se_do03": make(
+        "simple_cnn_se_do03",
+        "控制变量：SimpleCNN + SE，保持 Dropout=0.3",
+        model={"name": "simple_cnn", "attention": "se", "width": 64, "dropout": 0.3},
+        train={"epochs": 140, "scheduler_epochs": 60, "early_stop_patience": 20},
+    ),
+    "simple_cnn_cbam_do03": make(
+        "simple_cnn_cbam_do03",
+        "控制变量：SimpleCNN + CBAM，保持 Dropout=0.3",
+        model={"name": "simple_cnn", "attention": "cbam", "width": 64, "dropout": 0.3},
+        train={"epochs": 140, "scheduler_epochs": 60, "early_stop_patience": 20},
+    ),
     # ------------------------------------------------------------------ #
     # 学习率调度策略
     # ------------------------------------------------------------------ #
