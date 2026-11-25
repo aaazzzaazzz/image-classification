@@ -213,6 +213,26 @@ EXPERIMENTS = {
             "early_stop_patience": 20,
         },
     ),
+    "resnet20_constant": make(
+        "resnet20_constant",
+        "固定学习率 lr=0.1（不调度）",
+        train={
+            "scheduler": "constant",
+            "lr": 0.1,
+            "epochs": 140,
+            "early_stop_patience": 20,
+        },
+    ),
+    "resnet20_constant005": make(
+        "resnet20_constant005",
+        "固定学习率 lr=0.05（不调度）",
+        train={
+            "scheduler": "constant",
+            "lr": 0.05,
+            "epochs": 140,
+            "early_stop_patience": 20,
+        },
+    ),
     # ------------------------------------------------------------------ #
     # 综合改进模型（用于最终性能、Grad-CAM 与集成）
     # ------------------------------------------------------------------ #
