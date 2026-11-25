@@ -59,21 +59,22 @@ cifar-10-python/
 │   ├── gradcam.py           # Grad-CAM 与特征图提取
 │   ├── metrics.py           # 混淆矩阵、每类 P/R/F1、Top-5、Macro-F1
 │   ├── visualize.py         # 全部可视化
-│   └── experiments.py       # 18 个实验配置
+│   └── experiments.py       # 主实验与扩展实验配置
 ├── scripts/
 │   ├── run_experiments.py   # 批量训练（断点续跑 / 分组 / 自动集成）
 │   ├── ensemble_search.py   # 验证集贪心加权集成
-│   ├── make_report_assets.py# 汇总表格 + 报告图表（含 Grad-CAM / 误差分析）
-│   └── build_report_docx.py # Markdown 报告转 Word
+│   ├── precompute_teacher_probs.py # 预计算 KD 教师概率
+│   └── run_main_es_sweep.py # 主实验早停批量重跑
 ├── tests/test_components.py # 组件冒烟测试
 ├── outputs/                 # 训练结果（自动生成）
 │   ├── results/<实验名>/    # results.json, history.json, config.json, test_probs.npy
 │   ├── checkpoints/         # 最佳权重
 │   ├── figures/             # 曲线、混淆矩阵、Grad-CAM、对比图
-│   ├── logs/                # 每个实验的完整训练日志
-│   └── evaluation/          # 单独评估 / 等权集成 / 加权集成结果
-└── report/                  # 实验报告（Markdown / Word）
+│   ├── evaluation/          # 单独评估 / 等权集成 / 加权集成结果
+│   └── teacher_probs/       # KD 教师 softmax 概率
 ```
+
+> 实验报告正文（docx/pdf）和报告生成脚本不包含在本仓库中；仓库只保留可运行代码、实验结果和图表。
 
 ## 4. 快速开始
 
@@ -87,7 +88,7 @@ python -m src.train --exp resnet20_final
 # 3) 运行全部 18 个实验（自动跳过已完成项，最后训练并集成三个最终模型）
 python scripts/run_experiments.py --group all --ensemble
 
-# 4) 只跑某一组（baseline / models / aug / loss / attention / scheduler / pretrained / final / kd）
+# 4) 只跑某一组（baseline / models / aug / loss / attention / scheduler / pretrained / final / kd / lr）
 python scripts/run_experiments.py --group attention
 
 # 5) 重新训练指定实验
