@@ -160,6 +160,12 @@ EXPERIMENTS = {
         model={"name": "simple_cnn", "attention": "se"},
         train={"epochs": 140, "scheduler_epochs": 60, "early_stop_patience": 20},
     ),
+    "simple_cnn_cbam": make(
+        "simple_cnn_cbam",
+        "SimpleCNN + CBAM（通道 + 空间注意力，每个 stage 后）",
+        model={"name": "simple_cnn", "attention": "cbam"},
+        train={"epochs": 140, "scheduler_epochs": 60, "early_stop_patience": 20},
+    ),
     # ------------------------------------------------------------------ #
     # 学习率调度策略
     # ------------------------------------------------------------------ #
