@@ -74,8 +74,6 @@ cifar-10-python/
 │   └── teacher_probs/       # KD 教师 softmax 概率
 ```
 
-> 实验报告正文（docx/pdf）和报告生成脚本不包含在本仓库中；仓库只保留可运行代码、实验结果和图表。
-
 ## 4. 快速开始
 
 ```bash
